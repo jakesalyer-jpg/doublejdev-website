@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Double J Development & Construction</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #0d0d0d; --black-soft: #1a1a1a; --white: #ffffff;
+      --off-white: #f5f4f2; --gray: #888; --gray-light: #e8e8e8;
+      --amber: #c0712a; --amber-light: #d9924f;
+      --font-display: 'Barlow Condensed', sans-serif;
+      --font-body: 'Barlow', sans-serif; --max: 1200px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); color: var(--black); background: var(--white); overflow-x: hidden; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--white); border-bottom: 2px solid var(--black); padding: 0 3rem; display: flex; align-items: center; justify-content: space-between; height: 72px; }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; }
+    .nav-logo-svg { height: 40px; width: auto; color: var(--white); }
+    .nav-logo-divider { width: 1px; height: 28px; background: rgba(255,255,255,0.15); }
+    .nav-logo-text { font-family: var(--font-display); font-size: 0.65rem; font-weight: 600; color: rgba(255,255,255,0.45); letter-spacing: 0.16em; text-transform: uppercase; line-height: 1.5; }
+    .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+    .nav-links a { text-decoration: none; font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--black); transition: color 0.2s; }
+    .nav-links a:hover { color: var(--amber); }
+    .nav-cta { background: var(--black); color: var(--white) !important; padding: 0.55rem 1.4rem; }
+    .nav-cta:hover { background: var(--amber) !important; }
+
+    /* HERO */
+    #hero { min-height: 100vh; background: var(--black); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 9rem 2rem 5rem; position: relative; overflow: hidden; }
+    #hero::before { content: ''; position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=60') center/cover; opacity: 0.15; }
+    .hero-inner { position: relative; z-index: 2; max-width: 800px; }
+    .hero-logo-svg { width: 180px; height: auto; color: var(--white); margin: 0 auto 2.5rem; display: block; }
+    .hero-heading { font-family: var(--font-display); font-size: clamp(3rem, 7vw, 6rem); font-weight: 800; color: var(--white); line-height: 0.92; text-transform: uppercase; letter-spacing: -0.01em; margin-bottom: 1.5rem; }
+    .hero-heading span { color: var(--amber); display: block; }
+    .hero-rule { width: 60px; height: 3px; background: var(--amber); margin: 0 auto 1.5rem; }
+    .hero-sub { font-size: 1.05rem; font-weight: 300; color: rgba(255,255,255,0.55); line-height: 1.75; max-width: 520px; margin: 0 auto 2.5rem; }
+    .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 4rem; }
+    .btn-primary { background: var(--amber); color: var(--white); padding: 1rem 2.4rem; border: none; font-family: var(--font-display); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: background 0.2s, transform 0.15s; display: inline-block; }
+    .btn-primary:hover { background: var(--amber-light); transform: translateY(-1px); }
+    .btn-ghost { background: transparent; color: var(--white); padding: 1rem 2.4rem; border: 2px solid rgba(255,255,255,0.25); font-family: var(--font-display); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: border-color 0.2s, color 0.2s; display: inline-block; }
+    .btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
+    .hero-stats { display: inline-flex; border: 1px solid rgba(255,255,255,0.1); }
+    .stat-item { padding: 1.25rem 2.5rem; border-right: 1px solid rgba(255,255,255,0.1); text-align: center; }
+    .stat-item:last-child { border-right: none; }
+    .stat-num { font-family: var(--font-display); font-size: 2rem; font-weight: 800; color: var(--amber); line-height: 1; }
+    .stat-lbl { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-top: 0.3rem; }
+
+    /* TICKER */
+    .ticker { background: var(--amber); padding: 0.7rem 0; overflow: hidden; }
+    .ticker-track { display: flex; white-space: nowrap; animation: ticker 30s linear infinite; }
+    .ticker-item { font-family: var(--font-display); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--white); padding: 0 2.5rem; }
+    .ticker-item::after { content: '·'; margin-left: 2.5rem; opacity: 0.5; }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* SECTIONS */
+    section { padding: 6rem 3rem; }
+    .container { max-width: var(--max); margin: 0 auto; }
+    .eyebrow { font-family: var(--font-display); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.75rem; }
+    .eyebrow::before { content: ''; display: block; width: 32px; height: 2px; background: var(--amber); }
+    .section-heading { font-family: var(--font-display); font-weight: 800; font-size: clamp(2.2rem, 4vw, 3.2rem); text-transform: uppercase; line-height: 0.95; letter-spacing: -0.01em; color: var(--black); margin-bottom: 1.25rem; }
+    .section-sub { font-size: 1rem; font-weight: 300; color: var(--gray); line-height: 1.75; max-width: 520px; }
+
+    /* ABOUT */
+    #about { background: var(--off-white); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .about-img-wrap { position: relative; }
+    .about-img-wrap::before { content: ''; position: absolute; top: -14px; left: -14px; right: 14px; bottom: 14px; border: 2px solid var(--amber); z-index: 0; }
+    .about-img-wrap img { width: 100%; display: block; position: relative; z-index: 1; }
+    .about-badge { position: absolute; bottom: -1px; right: -1px; z-index: 2; background: var(--black); padding: 1.25rem 1.75rem; text-align: center; }
+    .about-badge .big { font-family: var(--font-display); font-size: 2rem; font-weight: 800; color: var(--amber); display: block; }
+    .about-badge .sm { font-family: var(--font-display); font-size: 0.6rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+    .about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 2rem; }
+    .feat-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.9rem 1rem; background: var(--white); border-left: 3px solid var(--amber); }
+    .feat-icon { width: 18px; height: 18px; flex-shrink: 0; color: var(--amber); }
+    .feat-item p { font-family: var(--font-display); font-size: 0.88rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--black); }
+
+    /* SERVICES */
+    #services { background: var(--white); }
+    .services-header { margin-bottom: 3rem; }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--black); border: 1px solid var(--black); }
+    .service-card { background: var(--white); position: relative; overflow: hidden; transition: background 0.25s; }
+    .service-card:hover { background: var(--off-white); }
+    .service-img-wrap { overflow: hidden; }
+    .service-img { width: 100%; height: 190px; object-fit: cover; display: block; filter: grayscale(20%); transition: filter 0.3s, transform 0.4s; }
+    .service-card:hover .service-img { filter: grayscale(0%); transform: scale(1.04); }
+    .service-body { padding: 1.75rem; }
+    .service-num { font-family: var(--font-display); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.2em; color: var(--amber); margin-bottom: 0.4rem; }
+    .service-card h3 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; text-transform: uppercase; color: var(--black); margin-bottom: 0.65rem; line-height: 1; }
+    .service-card p { font-size: 0.87rem; color: var(--gray); line-height: 1.65; margin-bottom: 1.1rem; }
+    .service-list { list-style: none; display: flex; flex-direction: column; gap: 0.3rem; }
+    .service-list li { font-family: var(--font-display); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--black-soft); display: flex; align-items: center; gap: 0.5rem; }
+    .service-list li::before { content: '—'; color: var(--amber); font-weight: 400; }
+    .coming-card { grid-column: 1 / -1; background: var(--black) !important; display: grid; grid-template-columns: 1fr 1fr; align-items: center; }
+    .coming-card .service-img { height: 100%; min-height: 200px; filter: grayscale(60%); opacity: 0.45; }
+    .coming-card .service-body { padding: 2.5rem 3rem; }
+    .coming-card h3 { color: var(--white); }
+    .coming-card p { color: rgba(255,255,255,0.45); }
+    .coming-card .service-list li { color: rgba(255,255,255,0.5); }
+    .coming-badge { display: inline-block; margin-bottom: 0.75rem; background: var(--amber); color: var(--white); font-family: var(--font-display); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.25rem 0.75rem; }
+
+    /* PROCESS */
+    #process { background: var(--black); }
+    #process .eyebrow { color: var(--amber-light); }
+    #process .eyebrow::before { background: var(--amber-light); }
+    #process .section-heading { color: var(--white); }
+    #process .section-sub { color: rgba(255,255,255,0.4); margin-bottom: 4rem; }
+    .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.08); }
+    .process-step { background: var(--black); padding: 2.5rem 2rem; border-top: 3px solid transparent; transition: border-color 0.2s; }
+    .process-step:hover { border-top-color: var(--amber); }
+    .step-num { font-family: var(--font-display); font-size: 3rem; font-weight: 800; color: rgba(255,255,255,0.06); line-height: 1; margin-bottom: 1rem; }
+    .process-step h4 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--white); margin-bottom: 0.6rem; }
+    .process-step p { font-size: 0.84rem; color: rgba(255,255,255,0.4); line-height: 1.65; }
+
+    /* TEAM */
+    #team { background: var(--off-white); }
+    .team-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; margin-bottom: 3.5rem; }
+    .team-intro-right p { font-size: 1rem; font-weight: 300; color: var(--gray); line-height: 1.8; padding-top: 0.5rem; }
+    .team-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .team-card { background: var(--white); overflow: hidden; border: 1px solid var(--gray-light); transition: box-shadow 0.25s; }
+    .team-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
+    .team-card-top { background: var(--black); padding: 2rem 2rem; display: flex; align-items: center; gap: 1.5rem; }
+    .team-initial { width: 68px; height: 68px; border: 2px solid var(--amber); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 2rem; font-weight: 800; color: var(--amber); flex-shrink: 0; }
+    .team-name-block h3 { font-family: var(--font-display); font-size: 2rem; font-weight: 800; text-transform: uppercase; color: var(--white); line-height: 1; }
+    .team-name-block .role { font-family: var(--font-display); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber); margin-top: 0.35rem; }
+    .team-card-body { padding: 1.75rem 2rem; }
+    .team-card-body p { font-size: 0.9rem; color: var(--gray); line-height: 1.7; }
+    .expertise { margin-top: 1.25rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tag { font-family: var(--font-display); font-size: 0.67rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.3rem 0.75rem; background: var(--off-white); color: var(--black); border: 1px solid var(--gray-light); }
+
+    /* CONTACT */
+    #contact { background: var(--white); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+    .contact-info .section-sub { margin-bottom: 3rem; }
+    .contact-details { display: flex; flex-direction: column; border: 1px solid var(--gray-light); }
+    .contact-item { display: flex; align-items: center; gap: 1.25rem; padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--gray-light); }
+    .contact-item:last-child { border-bottom: none; }
+    .contact-icon-wrap { width: 40px; height: 40px; background: var(--black); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .contact-icon-wrap svg { color: var(--amber); }
+    .ct-label { font-family: var(--font-display); font-size: 0.63rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber); display: block; margin-bottom: 0.2rem; }
+    .ct-value { font-size: 0.9rem; color: var(--black); font-weight: 500; }
+    .contact-form { display: flex; flex-direction: column; border: 1px solid var(--gray-light); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; }
+    .form-group { display: flex; flex-direction: column; border-bottom: 1px solid var(--gray-light); border-right: 1px solid var(--gray-light); }
+    .form-group.no-right { border-right: none; }
+    .form-full { grid-column: 1 / -1; border-right: none !important; }
+    .form-group label { font-family: var(--font-display); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber); padding: 0.7rem 1rem 0; background: var(--off-white); }
+    .form-group input, .form-group select, .form-group textarea { padding: 0.55rem 1rem 0.7rem; border: none; outline: none; font-family: var(--font-body); font-size: 0.9rem; color: var(--black); background: var(--off-white); resize: none; }
+    .form-group textarea { min-height: 110px; }
+    .form-submit { background: var(--black); color: var(--white); border: none; padding: 1.1rem; font-family: var(--font-display); font-size: 0.88rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; }
+    .form-submit:hover { background: var(--amber); }
+
+    /* FOOTER */
+    footer { background: var(--black); padding: 4rem 3rem 2.5rem; }
+    .footer-inner { max-width: var(--max); margin: 0 auto; }
+    .footer-top { display: flex; align-items: center; justify-content: space-between; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 2rem; }
+    .footer-logo-svg { height: 48px; width: auto; color: var(--white); }
+    .footer-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+    .footer-links a { font-family: var(--font-display); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--amber-light); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; }
+    .footer-copy { font-family: var(--font-display); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.18); }
+    .footer-tagline { font-family: var(--font-display); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); opacity: 0.6; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .hero-logo-svg { animation: fadeUp 0.5s ease both 0.1s; }
+    .hero-heading  { animation: fadeUp 0.6s ease both 0.3s; }
+    .hero-rule     { animation: fadeUp 0.5s ease both 0.45s; }
+    .hero-sub      { animation: fadeUp 0.6s ease both 0.55s; }
+    .hero-actions  { animation: fadeUp 0.6s ease both 0.7s; }
+    .hero-stats    { animation: fadeUp 0.6s ease both 0.85s; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .about-grid, .contact-grid, .team-intro { grid-template-columns: 1fr; gap: 2.5rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .coming-card { grid-template-columns: 1fr; }
+      .process-grid { grid-template-columns: 1fr 1fr; }
+      .team-cards { grid-template-columns: 1fr; }
+      nav { padding: 0 1.5rem; }
+      .nav-links { display: none; }
+      .nav-logo-text, .nav-logo-divider { display: none; }
+      section { padding: 5rem 1.5rem; }
+      .footer-top { flex-direction: column; gap: 2rem; }
+      .footer-bottom { flex-direction: column; gap: 0.75rem; text-align: center; }
+      .form-row { grid-template-columns: 1fr; }
+      .about-badge { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo"><img src="logo.jpg" alt="Double J" style="height:50px;width:auto;" /></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#contact" class="nav-cta">Contact Us</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-inner">
+      <img src="logo.jpg" alt="Double J" style="width:180px;height:auto;margin:0 auto 2.5rem;display:block;" />
+      <h1 class="hero-heading">Building<br><span>What Matters.</span></h1>
+      <div class="hero-rule"></div>
+      <p class="hero-sub">Double J Development & Construction delivers full-service development, expert construction, and reliable property management — built on trust, finished on time.</p>
+      <div class="hero-actions">
+        <a href="#services" class="btn-primary">Our Services</a>
+        <a href="#contact" class="btn-ghost">Start a Project</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item"><div class="stat-num">3+</div><div class="stat-lbl">Services</div></div>
+        <div class="stat-item"><div class="stat-num">2</div><div class="stat-lbl">Partners</div></div>
+        <div class="stat-item"><div class="stat-num">100%</div><div class="stat-lbl">Committed</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-track">
+      <span class="ticker-item">Development</span><span class="ticker-item">Construction</span><span class="ticker-item">Property Management</span><span class="ticker-item">Lubbock, Texas</span><span class="ticker-item">Built Right</span><span class="ticker-item">Jake & Jay</span>
+      <span class="ticker-item">Development</span><span class="ticker-item">Construction</span><span class="ticker-item">Property Management</span><span class="ticker-item">Lubbock, Texas</span><span class="ticker-item">Built Right</span><span class="ticker-item">Jake & Jay</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-img-wrap">
+          <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80" alt="Double J Team" />
+          <div class="about-badge"><span class="big">JJ</span><span class="sm">Jake & Jay</span></div>
+        </div>
+        <div class="about-content">
+          <div class="eyebrow">Who We Are</div>
+          <h2 class="section-heading">Two Js.<br>One Vision.</h2>
+          <p class="section-sub">Double J was founded by Jake and Jay — two partners united by a shared commitment to quality craftsmanship and responsible development. We treat every project as if it were our own.</p>
+          <p class="section-sub" style="margin-top:1rem;">From ground-up development and general contracting to full-service property management, we're with you at every stage.</p>
+          <div class="about-features">
+            <div class="feat-item"><svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg><p>Development</p></div>
+            <div class="feat-item"><svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="7" width="20" height="15" rx="1"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg><p>Construction</p></div>
+            <div class="feat-item"><svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg><p>Management</p></div>
+            <div class="feat-item"><svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg><p>Client-First</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="container">
+      <div class="services-header">
+        <div class="eyebrow">What We Do</div>
+        <h2 class="section-heading">Our Services</h2>
+        <p class="section-sub">From concept to completion — and beyond. A full suite of real estate services under one roof.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-img-wrap"><img class="service-img" src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=700&q=80" alt="Development" /></div>
+          <div class="service-body"><div class="service-num">01</div><h3>Development</h3><p>We turn raw land and bold ideas into viable real estate projects — managing feasibility, entitlements, design coordination, and execution.</p><ul class="service-list"><li>Site Selection & Feasibility</li><li>Land Acquisition</li><li>Project Planning & Design</li><li>Permit & Entitlement Management</li></ul></div>
+        </div>
+        <div class="service-card">
+          <div class="service-img-wrap"><img class="service-img" src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=700&q=80" alt="Construction" /></div>
+          <div class="service-body"><div class="service-num">02</div><h3>Construction</h3><p>Quality-first general contracting for residential and commercial builds. Every detail managed so your project lands on time and on budget.</p><ul class="service-list"><li>New Construction</li><li>Renovations & Remodels</li><li>Commercial Buildouts</li><li>Quality Control & Inspections</li></ul></div>
+        </div>
+        <div class="service-card">
+          <div class="service-img-wrap"><img class="service-img" src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=700&q=80" alt="Property Management" /></div>
+          <div class="service-body"><div class="service-num">03</div><h3>Property Management</h3><p>Protect and grow your investment with professional property management. We handle tenant relations, maintenance, and reporting.</p><ul class="service-list"><li>Tenant Screening</li><li>Rent Collection</li><li>Maintenance Coordination</li><li>Financial Reporting</li></ul></div>
+        </div>
+        <div class="service-card coming-card">
+          <div class="service-img-wrap"><img class="service-img" src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=700&q=80" alt="Leasing" /></div>
+          <div class="service-body"><div class="coming-badge">Coming Soon</div><div class="service-num">04</div><h3>Leasing</h3><p>Full-service leasing is on the way once our real estate license is complete — covering marketing, showings, applications, and lease execution.</p><ul class="service-list"><li>Property Marketing</li><li>Tenant Placement</li><li>Lease Negotiation</li></ul></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process">
+    <div class="container">
+      <div class="eyebrow">How We Work</div>
+      <h2 class="section-heading">Our Process</h2>
+      <p class="section-sub">A clear, consistent approach that keeps every project on track — from the first handshake to final delivery.</p>
+      <div class="process-grid">
+        <div class="process-step"><div class="step-num">01</div><h4>Consultation</h4><p>We sit down to understand your goals, timeline, and budget — no pressure, just clarity.</p></div>
+        <div class="process-step"><div class="step-num">02</div><h4>Planning</h4><p>We develop a detailed project plan, scope, and timeline with full transparency.</p></div>
+        <div class="process-step"><div class="step-num">03</div><h4>Execution</h4><p>Our team coordinates every moving part from permitting to final build.</p></div>
+        <div class="process-step"><div class="step-num">04</div><h4>Delivery</h4><p>We hand over a finished, inspected project — and stand behind our work.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section id="team">
+    <div class="container">
+      <div class="team-intro">
+        <div>
+          <div class="eyebrow">The Partners</div>
+          <h2 class="section-heading">The People<br>Behind the Work.</h2>
+        </div>
+        <div class="team-intro-right">
+          <p>Double J is built on a simple idea: two people who care deeply about what they build and stand behind every project they touch. Jake and Jay bring complementary skills and a shared work ethic that sets the tone for everything Double J does.</p>
+        </div>
+      </div>
+      <div class="team-cards">
+        <div class="team-card">
+          <div class="team-card-top">
+            <div class="team-initial">J</div>
+            <div class="team-name-block"><h3>Jake</h3><p class="role">Co-Founder · Development</p></div>
+          </div>
+          <div class="team-card-body">
+            <p>Jake leads project development and strategy for Double J. With a sharp eye for opportunity and a hands-on approach, he manages everything from site selection and land acquisition to coordinating design and entitlements — making sure every project gets off on the right foot.</p>
+            <div class="expertise">
+              <span class="tag">Site Selection</span><span class="tag">Land Acquisition</span><span class="tag">Project Strategy</span><span class="tag">Entitlements</span>
+            </div>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="team-card-top">
+            <div class="team-initial">J</div>
+            <div class="team-name-block"><h3>Jay</h3><p class="role">Co-Founder · Construction</p></div>
+          </div>
+          <div class="team-card-body">
+            <p>Jay runs all construction operations at Double J. He oversees every build from groundbreaking to final walkthrough — managing subcontractors, timelines, and quality control to ensure every project meets the highest standards of craftsmanship, on schedule and on budget.</p>
+            <div class="expertise">
+              <span class="tag">General Contracting</span><span class="tag">Subcontractor Mgmt</span><span class="tag">Quality Control</span><span class="tag">Scheduling</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="eyebrow">Get In Touch</div>
+          <h2 class="section-heading">Let's Build Something Together</h2>
+          <p class="section-sub">Whether you're ready to break ground or just starting to explore, we'd love to hear from you.</p>
+          <div class="contact-details">
+            <div class="contact-item">
+              <div class="contact-icon-wrap"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+              <div><span class="ct-label">Address</span><span class="ct-value">12016 Frankford Ave, Lubbock, TX</span></div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon-wrap"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.09a16 16 0 006 6l1.35-1.35a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15z"/></svg></div>
+              <div><span class="ct-label">Phone</span><span class="ct-value">806-368-1047</span></div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon-wrap"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+              <div><span class="ct-label">Email</span><span class="ct-value">doublej.dc@gmail.com</span></div>
+            </div>
+          </div>
+        </div>
+        <form class="contact-form" onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group"><label>First Name</label><input type="text" placeholder="Jake" required /></div>
+            <div class="form-group no-right"><label>Last Name</label><input type="text" placeholder="Johnson" required /></div>
+          </div>
+          <div class="form-group form-full"><label>Email</label><input type="email" placeholder="you@example.com" required /></div>
+          <div class="form-group form-full"><label>Service</label><select><option value="">Select a service...</option><option>Development</option><option>Construction</option><option>Property Management</option><option>General Inquiry</option></select></div>
+          <div class="form-group form-full" style="border-bottom:none"><label>Message</label><textarea placeholder="Tell us about your project..."></textarea></div>
+          <button type="submit" class="form-submit">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <img src="logo.jpg" alt="Double J" style="height:52px;width:auto;" />
+        <ul class="footer-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#process">Process</a></li>
+          <li><a href="#team">Team</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">&copy; 2026 Double J Development & Construction · Lubbock, Texas</span>
+        <span class="footer-tagline">Development · Construction · Property Management</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.form-submit');
+      btn.textContent = '✓ Message Sent!'; btn.style.background = '#2d7a4f';
+      setTimeout(() => { btn.textContent = 'Send Message'; btn.style.background = ''; e.target.reset(); }, 3000);
+    }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.style.opacity='1'; entry.target.style.transform='translateY(0)'; } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.service-card,.process-step,.team-card,.feat-item').forEach(el => {
+      el.style.opacity='0'; el.style.transform='translateY(18px)';
+      el.style.transition='opacity 0.5s ease, transform 0.5s ease';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
